@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Maven自动部署war包至Tomcat by liurenjin</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Maven自动部署war包至Tomcat</h1>
+        <h2>Maven3.2.5  Tomcat6</h2>
+        <a href="https://github.com/liurenjin" class="button"><small>Follow me on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="插件说明与配置" class="anchor" href="#%E6%8F%92%E4%BB%B6%E8%AF%B4%E6%98%8E%E4%B8%8E%E9%85%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>插件说明与配置</h1>
+
+<p>具体细节可以查看参考资料进行推敲。<br>
+1. tomcat-maven-plugin插件已经从groupId的org.codehaus.mojo转至org.apache.tomcat.maven;<br>
+2. pom.xml配置： </p>
+
+<div class="highlight highlight-source-js"><pre>    <span class="pl-k">&lt;</span>plugin<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span>groupId<span class="pl-k">&gt;</span><span class="pl-smi">org</span>.<span class="pl-smi">apache</span>.<span class="pl-smi">tomcat</span>.<span class="pl-smi">maven</span><span class="pl-k">&lt;</span><span class="pl-k">/</span>groupId<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span>artifactId<span class="pl-k">&gt;</span>tomcat6<span class="pl-k">-</span>maven<span class="pl-k">-</span>plugin<span class="pl-k">&lt;</span><span class="pl-k">/</span>artifactId<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span>version<span class="pl-k">&gt;</span><span class="pl-c1">2.2</span><span class="pl-k">&lt;</span><span class="pl-k">/</span>version<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span>configuration<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span>url<span class="pl-k">&gt;</span>http<span class="pl-k">:</span><span class="pl-c">//localhost:8080/manager&lt;/url&gt;</span>
+       <span class="pl-k">&lt;</span>uriEncoding<span class="pl-k">&gt;</span><span class="pl-c1">UTF</span><span class="pl-k">-</span><span class="pl-c1">8</span><span class="pl-k">&lt;</span><span class="pl-k">/</span>uriEncoding<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span>server<span class="pl-k">&gt;</span>demoServer<span class="pl-k">&lt;</span><span class="pl-k">/</span>server<span class="pl-k">&gt;</span>
+       <span class="pl-c">&lt;!--</span> <span class="pl-k">&lt;</span>username<span class="pl-k">&gt;</span>demo<span class="pl-k">&lt;</span><span class="pl-k">/</span>username<span class="pl-k">&gt;</span> <span class="pl-k">&lt;</span>password<span class="pl-k">&gt;</span>demo<span class="pl-k">&lt;</span><span class="pl-k">/</span>password<span class="pl-k">&gt;</span> <span class="pl-c">--&gt;</span>
+       <span class="pl-k">&lt;</span>update<span class="pl-k">&gt;</span><span class="pl-c1">true</span><span class="pl-k">&lt;</span><span class="pl-k">/</span>update<span class="pl-k">&gt;</span>
+       <span class="pl-c">&lt;!--</span> application path always starts <span class="pl-k">with</span> <span class="pl-k">/</span> <span class="pl-c">--&gt;</span>
+       <span class="pl-k">&lt;</span>path<span class="pl-k">&gt;</span><span class="pl-k">/</span>${finalName}<span class="pl-k">&lt;</span><span class="pl-k">/</span>path<span class="pl-k">&gt;</span>
+       <span class="pl-k">&lt;</span><span class="pl-k">/</span>configuration<span class="pl-k">&gt;</span>         
+    <span class="pl-k">&lt;</span><span class="pl-k">/</span>plugin<span class="pl-k">&gt;</span></pre></div>
+
+<p>其中project的节点下配置<code>&lt;finalName&gt;${project.artifactId}&lt;/finalName&gt;</code></p>
+
+<h3>
+<a id="参考资料" class="anchor" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>参考资料</h3>
+
+<ol>
+<li>
+<a href="http://www.journaldev.com/4738/how-to-deploy-maven-war-project-in-tomcat-automatically">How to Deploy Maven WAR Project in Tomcat Automatically</a> </li>
+<li><a href="http://blog.csdn.net/lanxuezaipiao/article/details/40356991">使用Maven自动部署Java Web项目到Tomcat问题小记</a></li>
+<li><a href="http://www.cnblogs.com/yuandingjiema/archive/2012/12/23/2829818.html">Maven入门示例(3)：自动部署至外部Tomcat</a></li>
+</ol>
+        </section>
+
+        <aside id="sidebar">
+
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
